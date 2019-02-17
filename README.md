@@ -1,3 +1,17 @@
+# Code Test Results
+
+There are four branches to review that contain code for each of the tasks:
+
+Branches:
+- `feature/display-events-total`: Display the total number of events in the title
+- `feature/events-loading-indicator`: Display a loading indicator while the events are loading
+- `feature/four-oh-four`: Error handling
+- `feature/favourite-events`: Implement favourites (incomplete)
+
+
+---------------------
+
+
 ![Nightjar](https://avatars1.githubusercontent.com/u/33653623?s=100&v=4)
 
 # 📋 Nightjar React Coding Exercise
