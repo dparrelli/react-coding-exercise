@@ -2,30 +2,36 @@ import React from 'react'
 import injectSheet from 'react-jss'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { getEvents, isEventsReady } from '../selectors'
+import { getEvents, isEventsReady, getEventsError } from '../selectors'
 import Icon from './Icon'
 import titleIcon from '../icons/vivid-angle-top-left.svg'
 import theme from '../style/theme'
 import Event from './Event'
 import LoadingTile from './LoadingTile'
+import ErrorMessage from './ErrorMessage'
 
-const Events = ({ classes, ready, events }) => (
-  <div className={classes.container}>
-    <h3 className={classes.title}>
-      <Icon className={classes.titleIcon} symbol={titleIcon} />
-      {!ready ? 'Loading Results' : `Results: ${events.length} events found`}
-    </h3>
-    <div className={classes.tilesWrapper}>
-      <div className={classes.tiles}>
-        {!ready ? Array.from(Array(9), (_, i) => <LoadingTile key={i} className={classes.tile} />) : events.map((event) => <Event key={event.id} className={classes.tile} content={event} />)}
+const Events = ({ classes, ready, events, error }) => {
+  if (error) return <ErrorMessage />
+
+  return (
+    <div className={classes.container}>
+      <h3 className={classes.title}>
+        <Icon className={classes.titleIcon} symbol={titleIcon} />
+        {!ready ? 'Loading Results' : `Results: ${events.length} events found`}
+      </h3>
+      <div className={classes.tilesWrapper}>
+        <div className={classes.tiles}>
+          {!ready ? Array.from(Array(9), (_, i) => <LoadingTile key={i} className={classes.tile} />) : events.map((event) => <Event key={event.id} className={classes.tile} content={event} />)}
+        </div>
       </div>
     </div>
-  </div>
-)
+  )
+}
 
 const mapStateToProps = (state) => ({
   ready: isEventsReady(state),
-  events: getEvents(state)
+  events: getEvents(state),
+  error: getEventsError(state)
 })
 
 export default compose(
