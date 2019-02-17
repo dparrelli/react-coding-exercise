@@ -7,21 +7,19 @@ import Icon from './Icon'
 import titleIcon from '../icons/vivid-angle-top-left.svg'
 import theme from '../style/theme'
 import Event from './Event'
+import LoadingTile from './LoadingTile'
 
 const Events = ({ classes, ready, events }) => (
   <div className={classes.container}>
     <h3 className={classes.title}>
       <Icon className={classes.titleIcon} symbol={titleIcon} />
-      {!ready ? 'Results' : `Results: ${events.length} events found`}
+      {!ready ? 'Loading Results' : `Results: ${events.length} events found`}
     </h3>
-    {!ready && <p>Loading...</p>}
-    {ready && (
-      <div className={classes.tilesWrapper}>
-        <div className={classes.tiles}>
-          {events.map((event) => <Event key={event.id} className={classes.tile} content={event} />)}
-        </div>
+    <div className={classes.tilesWrapper}>
+      <div className={classes.tiles}>
+        {!ready ? Array.from(Array(9), (_, i) => <LoadingTile key={i} className={classes.tile} />) : events.map((event) => <Event key={event.id} className={classes.tile} content={event} />)}
       </div>
-    )}
+    </div>
   </div>
 )
 
